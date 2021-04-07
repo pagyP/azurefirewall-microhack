@@ -150,23 +150,25 @@ Connect to **azbrazilsouthvm01** via Bastion, open the command prompt and try to
 Check the routing on **azbrsouthvm01**, using the Azure Cloud Shell:
 
 ```azure cli
-az network nic show-effective-route-table -g firewall-microhack-rg -n spoke-1-nic --output table
+az network nic show-effective-route-table -g firewall-microhack-rg -n azbrsouthvm01-nic --output table
 ```
 :question: Any route to **azbrsouthvm02**?
 
 Configure a existing route table using the Azure Cloud Shell for subnet on the spokes virtual networks in Brazil South region.
 
 ```azure cli
-az network route-table route create --name to-brazilsouth-spoke2 --resource-group firewall-microhack-rg --route-table-name rt-brazilsouth-spoke1-vmsubnet --address-prefix 10.100.2.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
-az network route-table route create --name to-brazilsouth-spoke1 --resource-group firewall-microhack-rg --route-table-name rt-brazilsouth-spoke2-vmsubnet --address-prefix 10.100.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
-az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke1-vnet  --resource-group firewall-microhack-rg  --route-table rt-brazilsouth-spoke1-vmsubnet
-az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke2-vnet  --resource-group firewall-microhack-rg  --route-table rt-brazilsouth-spoke2-vmsubnet
+az network route-table route create --name to-brazilsouth-spoke2 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke1-rt --address-prefix 10.20.2.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
+az network route-table route create --name to-brazilsouth-spoke1 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke2-rt --address-prefix 10.20.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
+az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke1-vnet  --resource-group firewall-microhack-rg  --route-table brazilsouth-spoke1-rt
+az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke2-vnet  --resource-group firewall-microhack-rg  --route-table brazilsouth-spoke2-rt
 ```
 
 Verify again the routing on **azbrsouthvm01** using the Azure Cloud Shell or Azure Portal.
 #### Task 2 - Deploy Network rule inside the Azure Firewall
 
-After you finish the setup for UDR (**Task 1**) try to ping the virtual machines (**azbrsouthvm01** and **azbrsouthvm02**) and ckeck on Azure Firewall workbook inside the Azure Log Analytics.
+After you finish the setup for UDR (**Task 1**) try to ping the virtual machines (**azbrsouthvm01** and **azbrsouthvm02**) and ckeck on the results in the Azure Firewall workbook (**Tab -> Azure Firewall - Network rule log statistics**) inside the Azure Log Analytics.
+
+![Azure Firewall workbook](./images/firewall-workbook.PNG)
 
 ## :checkered_flag: Results
 
