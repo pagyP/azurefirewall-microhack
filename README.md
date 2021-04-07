@@ -25,7 +25,7 @@ Contoso, Ltd. is a consulting company with the main office in Brazil and another
 
 The elements of Microhack are using a predefined Terraform template to deploy the base environment. You will deploy these resources in your Azure subscription in two differents Azure regions: *Brazil South and EastUS2*. At the end of this section, your base environment build looks as follows:
 
-![Firewall Architecture](./images/firewall-architeture.png)
+![Firewall Architecture](images/firewall-architeture.png)
 
 In summary:
 
@@ -37,7 +37,7 @@ To start the terraform deployment, follow the steps listed below:
     - To start Azure Cloud Shell:
         - Select the Cloud Shell button on the menu bar at the upper right in the Azure portal. 
 
-    ![](./images/hdi-cloud-shell-menu.png)
+    ![Menu](images/hdi-cloud-shell-menu.png)
 
 - Ensure you are properly logged in to your tenant and with a subscription selected for Azure. You can check that by using:
 
@@ -74,7 +74,7 @@ After the Terraform deployment concludes successfully, verify if the resources h
     - To start Azure Cloud Shell:
         - Select the Cloud Shell button on the menu bar at the upper right in the Azure portal. 
 
-    ![](./images/hdi-cloud-shell-menu.png)
+    ![Menu](images/hdi-cloud-shell-menu.png)
 
 ```azure cli
 az resource list --name firewall-microhack-rg
@@ -92,7 +92,7 @@ As part of the Microhack you will require to create a workspace in the log Analy
     - To start Azure Cloud Shell:
         - Select the Cloud Shell button on the menu bar at the upper right in the Azure portal. ->
 
-    ![](./images/hdi-cloud-shell-menu.png)
+    ![Menu](images/hdi-cloud-shell-menu.png)
 
 2. Run the follow command: 
 
@@ -166,15 +166,45 @@ az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke2-vne
 Verify again the routing on **azbrsouthvm01** using the Azure Cloud Shell or Azure Portal.
 #### Task 2 - Deploy Network rule inside the Azure Firewall
 
-After you finish the setup for UDR (**Task 1**) try to ping the virtual machines (**azbrsouthvm01** and **azbrsouthvm02**) and ckeck on the results in the Azure Firewall workbook (**Tab -> Azure Firewall - Network rule log statistics**) inside the Azure Log Analytics.
+After you finish the setup for UDR (**Task 1**) try to use ping tools between the virtual machines (**azbrsouthvm01** and **azbrsouthvm02**) and ckeck on the results in the Azure Firewall workbook (**Tab -> Azure Firewall - Network rule log statistics**) inside the Azure Log Analytics.
 
-![Azure Firewall workbook](./images/firewall-workbook.PNG)
+![Azure Firewall workbook](images/firewall-workbook.PNG)
 
-## :checkered_flag: Results
+
+In the portal, navigate to the **Firewall Policies** named az-fw-policy-brsouth. Click on "Network Rules" under "Settings", and click "+ Add a rule collection
+" at the top of the page. 
+
+Under the "Add a rule collection", follow the below steps:
+
+- Name: **rule-allow-spokes-connection**
+- Rule collction type: **Network**
+- Priority: **100**
+- Rule Collection Action: **Allow**
+- Rule Collection Group: **DefaultNetworkRuleCollectionGroup**
+- Rules
+    - Name: **to-spoke1**
+    - Source Type: **IP Address**
+    - Source: **10.20.2.0/24**
+    - Protocol: **Any**
+    - Destination Ports: *
+    - Destination Type: **IP Address**
+    - Destination: **10.20.1.0/24**
+
+    - Name: **to-spoke2**
+    - Source Type: **IP Address**
+    - Source: **10.20.1.0/24**
+    - Protocol: **Any**
+    - Destination Ports: *
+    - Destination Type: **IP Address**
+    - Destination: **10.20.2.0/24**
+
+Wait for the complete the configuration. 
+
+:question: Can you reach the virtual machines (**azbrsouthvm01** and **azbrsouthvm02**) using the ping?
 
 You now have the Intra-region forwarding in place.
 
-![Intra-region Forwarding Architecture](./images/Intra-region-Forwarding.png)
+![Intra-region Forwarding Architecture](images/Intra-region-Forwarding.png)
 
 ### Challenge 2 : Inter-region Forwarding
 ### Challenge 3 
