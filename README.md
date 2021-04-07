@@ -202,7 +202,9 @@ Wait for the complete the configuration.
 
 :question: Can you reach the virtual machines (**azbrsouthvm01** and **azbrsouthvm02**) using the ping?
 
-You now have the Intra-region forwarding in place.
+## :checkered_flag: Results:
+
+- You now have the Intra-region forwarding in place.
 
 ![Intra-region Forwarding Architecture](images/Intra-region-Forwarding.png)
 
