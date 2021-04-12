@@ -19,6 +19,19 @@ The purpose of this MicroHack is to build an understanding of the use of Azure F
 ## Objectives
 After completing this MicroHack you will be able to:
 
+- How to configure Azure Firewall with capabilities that are required for highly sensitive and regulated environments.
+
+- How to implement Azure Firewall and Firewall Manager to control hybrid and cross-virtual network traffic.
+
+- How to monitor network traffic for proper route configuration and troubleshooting.
+
+- How to bypass system routing to accomplish custom routing scenarios.
+
+- How to implement the Azure Sentinel to monitoring and generated security incident alerts with Azure Firewall.
+
+- How to set up and configure Azure Firewall policies.
+
+
 ## Scenario
 Contoso, Ltd. is a consulting company with the main office in Brazil and another branch office in the US; they are using Azure to host their workloads in two different regions. As part of their cloud journey, the Security and Cloud Team has started to look at a security cloud-native solution as the Azure Firewall.
 ## Prerequisites
@@ -129,10 +142,13 @@ az monitor diagnostic-settings create -n 'toLogAnalytics'
 
 :point_right: Repeat at the same steps 2 and 3 for **eastus2-hub-firewall**
 
-### Task 4: Deploy the workbook for Azure Firewall
+### Task 5: Deploy the workbook for Azure Firewall
 
 1. Follow step-by-step in the [Monitor logs using Azure Firewall Workbook](https://docs.microsoft.com/en-us/azure/firewall/firewall-workbook/)  to deploy the workbook for Azure firewall in Log Analytics workspace.
 
+### Task 6: Associate Firewall with the Azure Firewall instances
+
+### Task 7: Deploy the policies for Azure Firewall
 ## Challenges
 
 After you finished the base lab deployed you can progress to the Azure Firewall and Firewall Manager Microhack challenges!
@@ -164,9 +180,28 @@ az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke2-vne
 ```
 
 Verify again the routing on **azbrsouthvm01** using the Azure Cloud Shell or Azure Portal.
+
 #### Task 2 - Deploy Network rule inside the Azure Firewall
 
-After you finish the setup for UDR (**Task 1**) try to use ping tools between the virtual machines (**azbrsouthvm01** and **azbrsouthvm02**) and ckeck on the results in the Azure Firewall workbook (**Tab -> Azure Firewall - Network rule log statistics**) inside the Azure Log Analytics.
+After you finish the setup for UDR (**Task 1**) try to use ping tool between the virtual machines (**azbrsouthvm01 - 10.20.1.4** and **azbrsouthvm02 - 10.20.2.4**) and ckeck on the results in the Azure Log Analytics. You can use the below Kusto Query:
+
+```powershell
+AzureDiagnostics
+| where Category == "AzureFirewallNetworkRule" and msg_s contains "10.20.1.4" and msg_s contains "ICMP"
+| parse msg_s with Protocol " request from " SourceIP ":" SourcePortInt:int " to " TargetIP ":" TargetPortInt:int *
+| parse msg_s with * ". Action: " Action1a
+| parse msg_s with * " was " Action1b " to " NatDestination
+| parse msg_s with Protocol2 " request from " SourceIP2 " to " TargetIP2 ". Action: " Action2
+| extend
+SourcePort = tostring(SourcePortInt),
+TargetPort = tostring(TargetPortInt)
+| extend 
+    Action = case(Action1a == "", case(Action1b == "",Action2,Action1b), Action1a),
+    Protocol = case(Protocol == "", Protocol2, Protocol),
+    SourceIP = case(SourceIP == "", SourceIP2, SourceIP),
+    TargetIP = case(TargetIP == "", TargetIP2, TargetIP)
+| project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action
+```
 
 ![Azure Firewall workbook](images/firewall-workbook.PNG)
 
@@ -200,7 +235,7 @@ Under the "Add a rule collection", follow the below steps:
 
 Wait for the complete the configuration. 
 
-:question: Can you reach the virtual machines (**azbrsouthvm01** and **azbrsouthvm02**) using the ping?
+:question: Can you reach the virtual machine **azbrsouthvm01 - 10.20.1.4** from **azbrsouthvm02 - 10.20.2.4** using the ping tool?
 
 ## :checkered_flag: Results:
 
@@ -209,11 +244,38 @@ Wait for the complete the configuration.
 ![Intra-region Forwarding Architecture](images/Intra-region-Forwarding.png)
 
 ### Challenge 2 : Inter-region Forwarding
-### Challenge 3 
-### Challenge 4
+
+In this challenge, you will expand communication between two regions from spoke in Brazil South to spoke in EastUS2. The main goal to inspect the routes and test with the ping tool the communication between virtual machines.
+
+#### Task 1 - Add new a route in the existing User Defined Route (UDR)
+
+Connect to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command prompt and try to ping the  **azeastus2vm01 - 10.10.1.4**.
+
+:question: What is the result?
+
+Check the routing on **azbrsouthvm01**, using the Azure Cloud Shell:
+
+```azure cli
+az network nic show-effective-route-table -g firewall-microhack-rg -n azbrsouthvm01-nic --output table
+```
+:question: Any route to **azeastus2vm01**?
+
+Configure a existing route table using the Azure Cloud Shell for subnet on the spokes virtual networks in Brazil South region.
+
+```azure cli
+az network route-table route create --name to-eastus2-spoke1 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke1-rt --address-prefix 10.10.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
+
+
+```
+
+
+
+### Challenge 3 :  
+### Challenge 4 : 
 ### Challenge 5
 ### Challenge 6
 ### Challenge 7
+### Challenge 8
 
 
 
