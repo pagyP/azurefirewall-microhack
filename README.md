@@ -263,7 +263,9 @@ az network route-table route create --name to-eastus2-spoke1 --resource-group fi
 az network route-table route create --name to-brazil-spoke1 --resource-group firewall-microhack-rg --route-table-name eastus2-spoke1-rt --address-prefix 10.20.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.100.3.4
 ```
 
-:exclamation: You will need to manipulate the routing table (UDR) to reach the virtual machine in the East US region through two Azure Firewall
+:exclamation: You will need to manipulate the routing table (UDR) to reach the virtual machine in the East US region through two Azure Firewall instances.
+
+![Inter-region Route Set Up](images/Inter-region-Forwarding1.png)
 
 ```azure cli
 az network route-table route create --name to-eastus2-spoke1 --resource-group firewall-microhack-rg --route-table-name brazilsouth-interconn-rt --address-prefix 10.10.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.100.3.4
@@ -274,7 +276,7 @@ az network vnet subnet update --name AzureFirewallSubnet --vnet-name brazilsouth
 az network vnet subnet update --name AzureFirewallSubnet --vnet-name eastus2-hub-vnet  --resource-group firewall-microhack-rg  --route-table eastus2-interconn-rt
 
 ```
-![Inter-region Route Set Up](images/Inter-region-Forwarding1.png)
+
 
 Look at routing on **azbrsouthvm01** using the Azure Cloud Shell or Azure Portal, and verify if exist a route to reach the virtual machine **azeastus2vm01**.
 
