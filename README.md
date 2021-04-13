@@ -203,11 +203,7 @@ TargetPort = tostring(TargetPortInt)
 | project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action
 ```
 
-![Azure Firewall workbook](images/firewall-workbook.PNG)
-
-
-In the portal, navigate to the **Firewall Policies** named az-fw-policy-brsouth. Click on "Network Rules" under "Settings", and click "+ Add a rule collection
-" at the top of the page. 
+In the portal, navigate to the **Firewall Policies** named az-fw-policy-brsouth. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
 
 Under the "Add a rule collection", follow the below steps:
 
@@ -245,7 +241,7 @@ Wait for the complete the configuration.
 
 ### Challenge 2 : Inter-region Forwarding
 
-In this challenge, you will expand communication between two regions from spoke in Brazil South to spoke in EastUS2. The main goal to inspect the routes and test with the ping tool the communication between virtual machines.
+Now you will expand communication to another region from spoke in Brazil South to spoke in EastUS2. The main goal to inspect the routes and test with the ping tool the communication between virtual machines.
 
 #### Task 1 - Add new a route in the existing User Defined Route (UDR)
 
@@ -260,12 +256,18 @@ az network nic show-effective-route-table -g firewall-microhack-rg -n azbrsouthv
 ```
 :question: Any route to **azeastus2vm01**?
 
-Configure a existing route table using the Azure Cloud Shell for subnet on the spokes virtual networks in Brazil South region.
+Configure a existing route table using the Azure Cloud Shell for subnet on the spokes virtual networks in Brazil South and Eastus2 regions.
 
 ```azure cli
+
 az network route-table route create --name to-eastus2-spoke1 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke1-rt --address-prefix 10.10.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
-
-
+az network route-table route create --name to-eastus2-spoke1 --resource-group firewall-microhack-rg --route-table-name brazilsouth-interconn-rt --address-prefix 10.10.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.100.3.4
+az network route-table route create --name to-internet --resource-group firewall-microhack-rg --route-table-name brazilsouth-interconn-rt --address-prefix 0.0.0.0/0 --next-hop-type Internet
+az network route-table route create --name to-brazil-spoke1 --resource-group firewall-microhack-rg --route-table-name eastus2-spoke1-rt --address-prefix 10.20.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.100.3.4
+az network route-table route create --name to-brazilsouth-spoke1 --resource-group firewall-microhack-rg --route-table-name eastus2-interconn-rt --address-prefix 10.20.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
+az network route-table route create --name to-internet --resource-group firewall-microhack-rg --route-table-name eastus2-interconn-rt --address-prefix 0.0.0.0/0 --next-hop-type Internet
+az network vnet subnet update --name AzureFirewallSubnet --vnet-name brazilsouth-hub-vnet  --resource-group firewall-microhack-rg  --route-table brazilsouth-interconn-rt
+az network vnet subnet update --name AzureFirewallSubnet --vnet-name eastus2-hub-vnet  --resource-group firewall-microhack-rg  --route-table eastus2-interconn-rt
 ```
 
 

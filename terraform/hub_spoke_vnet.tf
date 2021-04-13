@@ -663,6 +663,33 @@ resource "azurerm_virtual_network_peering" "spoke2-brazilsouth-hub-vnet-peer" {
   depends_on                   = [azurerm_virtual_network.brazilsouth-spoke2-vnet, azurerm_virtual_network.brazilsouth-hub-vnet, azurerm_virtual_network_gateway.brazilsouth-hub-vpn-gateway]
   
 }
+resource "azurerm_virtual_network_peering" "hub-brazilsouth--eastus2-hub-vnet-peer" {
+  name                      = "hub-brazilsouth--eastus2-hub-vnet-peer"
+  resource_group_name       = azurerm_resource_group.firewall-microhack-rg.name
+  virtual_network_name      = azurerm_virtual_network.brazilsouth-hub-vnet.name
+  remote_virtual_network_id = azurerm_virtual_network.eastus2-hub-vnet.id
+
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+  allow_gateway_transit        = false
+  use_remote_gateways          = false
+  depends_on                   = [azurerm_virtual_network.brazilsouth-hub-vnet, azurerm_virtual_network.eastus2-hub-vnet]
+  
+}
+
+resource "azurerm_virtual_network_peering" "hub-eastus2-brazilsouth-hub-vnet-peer" {
+  name                      = "hub-eastus2-brazilsouth-hub-vnet-peer"
+  resource_group_name       = azurerm_resource_group.firewall-microhack-rg.name
+  virtual_network_name      = azurerm_virtual_network.eastus2-hub-vnet.name
+  remote_virtual_network_id = azurerm_virtual_network.brazilsouth-hub-vnet.id
+
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+  allow_gateway_transit        = false
+  use_remote_gateways          = false
+  depends_on                   = [azurerm_virtual_network.eastus2-hub-vnet, azurerm_virtual_network.brazilsouth-hub-vnet]
+  
+}
 
 #######################################################################
 ## Create UDR
@@ -704,5 +731,28 @@ resource "azurerm_route_table" "rt-brazilsouth-spoke2-vmsubnet" {
     microhack   = "Firewall and Firewall Manager"
   }
 }
+resource "azurerm_route_table" "rt-brazilsouth-intercnn-fwsubnet" {
+  name                          = "brazilsouth-intercnn"
+  location                      = "brazilsouth"
+  resource_group_name           = azurerm_resource_group.firewall-microhack-rg.name
+  disable_bgp_route_propagation = true
 
+  tags = {
+    environment = "microhack"
+    deployment  = "terraform"
+    microhack   = "Firewall and Firewall Manager"
+  }
+}
+resource "azurerm_route_table" "rt-eastus2-intercnn-fwsubnet" {
+  name                          = "eastus2-intercnn-rt"
+  location                      = "eastus2"
+  resource_group_name           = azurerm_resource_group.firewall-microhack-rg.name
+  disable_bgp_route_propagation = true
+
+  tags = {
+    environment = "microhack"
+    deployment  = "terraform"
+    microhack   = "Firewall and Firewall Manager"
+  }
+}
 
