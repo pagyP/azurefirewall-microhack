@@ -200,8 +200,9 @@ TargetPort = tostring(TargetPortInt)
     Protocol = case(Protocol == "", Protocol2, Protocol),
     SourceIP = case(SourceIP == "", SourceIP2, SourceIP),
     TargetIP = case(TargetIP == "", TargetIP2, TargetIP)
-| project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action
+| project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action,Resource
 ```
+![Azure Log Analytics](images/firewall-workspace.PNG)
 
 In the portal, navigate to the **Firewall Policies** named az-fw-policy-brsouth. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
 
@@ -262,9 +263,10 @@ Set up rule on the an existing routing table using the Azure Cloud Shell for the
 az network route-table route create --name to-eastus2-spoke1 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke1-rt --address-prefix 10.10.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
 az network route-table route create --name to-brazil-spoke1 --resource-group firewall-microhack-rg --route-table-name eastus2-spoke1-rt --address-prefix 10.20.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.100.3.4
 ```
+:exclamation: You still will need to manipulate the routing table (UDR) to reach the virtual machines in the East US or Brazil South regions through two Azure Firewall instances.
 
-:exclamation: You will need to manipulate the routing table (UDR) to reach the virtual machine in the East US region through two Azure Firewall instances.
-
+Note on the diagram we have four route tables on the different VNETs present in the environment, and each contains routes for the specific prefixes of connected VNETs. This table decides where traffic is sent from the virtual machines.
+ 
 ![Inter-region Route Set Up](images/Inter-region-Forwarding1.png)
 
 ```azure cli
@@ -274,19 +276,71 @@ az network route-table route create --name to-brazilsouth-spoke1 --resource-grou
 az network route-table route create --name to-internet --resource-group firewall-microhack-rg --route-table-name eastus2-interconn-rt --address-prefix 0.0.0.0/0 --next-hop-type Internet
 az network vnet subnet update --name AzureFirewallSubnet --vnet-name brazilsouth-hub-vnet  --resource-group firewall-microhack-rg  --route-table brazilsouth-interconn-rt
 az network vnet subnet update --name AzureFirewallSubnet --vnet-name eastus2-hub-vnet  --resource-group firewall-microhack-rg  --route-table eastus2-interconn-rt
-
 ```
-
 
 Look at routing on **azbrsouthvm01** using the Azure Cloud Shell or Azure Portal, and verify if exist a route to reach the virtual machine **azeastus2vm01**.
 
 #### Task 2 - Set up Network rules inside the Azure Firewall instances
 
+Try to use the ping tool between the virtual machines (**azbrsouthvm01 - 10.20.1.4** and **azeastus02vm - 10.10.1.4**), and verify if you reach the both virtual machines. For more details you can check the results in the Azure Log Analytics. You can use the below Kusto Query:
+
+```powershell
+AzureDiagnostics
+| where Category == "AzureFirewallNetworkRule" and msg_s contains "ICMP"
+| parse msg_s with Protocol " request from " SourceIP ":" SourcePortInt:int " to " TargetIP ":" TargetPortInt:int *
+| parse msg_s with * ". Action: " Action1a
+| parse msg_s with * " was " Action1b " to " NatDestination
+| parse msg_s with Protocol2 " request from " SourceIP2 " to " TargetIP2 ". Action: " Action2
+| extend
+SourcePort = tostring(SourcePortInt),
+TargetPort = tostring(TargetPortInt)
+| extend 
+    Action = case(Action1a == "", case(Action1b == "",Action2,Action1b), Action1a),
+    Protocol = case(Protocol == "", Protocol2, Protocol),
+    SourceIP = case(SourceIP == "", SourceIP2, SourceIP),
+    TargetIP = case(TargetIP == "", TargetIP2, TargetIP)
+| project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action, Resource
+```
+
+![Azure Log Analytics](images/firewall-workspace.PNG)
+
+In the portal, navigate to the **Firewall Policies** named az-fw-policy-brsouth. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
+
+Under the "Add a rule collection", follow the below steps:
+
+- Name: **rule-allow-spokes-connection**
+- Rule collction type: **Network**
+- Priority: **100**
+- Rule Collection Action: **Allow**
+- Rule Collection Group: **DefaultNetworkRuleCollectionGroup**
+- Rules
+    - Name: **to-spoke1**
+    - Source Type: **IP Address**
+    - Source: **10.20.2.0/24**
+    - Protocol: **Any**
+    - Destination Ports: *
+    - Destination Type: **IP Address**
+    - Destination: **10.20.1.0/24**
+
+    - Name: **to-spoke2**
+    - Source Type: **IP Address**
+    - Source: **10.20.1.0/24**
+    - Protocol: **Any**
+    - Destination Ports: *
+    - Destination Type: **IP Address**
+    - Destination: **10.20.2.0/24**
+
+Wait for the complete the configuration. 
+
+:question: Can you reach the virtual machine **azeastus02vm - 10.10.1.4** from **azbrsouthvm01 - 10.20.1.4**?
+
 ### Challenge 3 :  
+
+
 ### Challenge 4 : 
-### Challenge 5
-### Challenge 6
-### Challenge 7
+### Challenge 5 :
+### Challenge 6 :
+### Challenge 7 :
 ### Challenge 8
 
 
