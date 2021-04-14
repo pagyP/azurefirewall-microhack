@@ -333,6 +333,11 @@ Under the "Add a rule collection", follow the below steps:
 Wait for the complete the configuration. 
 
 :question: Can you reach the virtual machine **azeastus02vm - 10.10.1.4** from **azbrsouthvm01 - 10.20.1.4**?
+## :checkered_flag: Results:
+
+- You now have the Inter-region forwarding in place.
+
+![Intra-region Forwarding Architecture](images/Inter-region-Forwarding.png)
 
 ### Challenge 3 :  
 
