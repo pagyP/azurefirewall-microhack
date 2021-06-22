@@ -43,7 +43,9 @@ After completing this Hack you will be able to:
 
 The purpose of this Hack is to build an understanding of the use of Azure Firewall with a focus on the network and security capabilities recently introduced. Consider the following articles required as pre-reading to build a foundation of knowledge.
 
-[Azure Network Security Ninja Training - 1.2.2 Azure Firewall and Azure Firewall Manager](https://techcommunity.microsoft.com/t5/azure-network-security/azure-network-security-ninja-training/ba-p/2356101)
+[Azure Network Security Ninja Training ](https://techcommunity.microsoft.com/t5/azure-network-security/azure-network-security-ninja-training/ba-p/2356101)
+   - Check out the **1.2.2 Azure Firewall and Azure Firewall Manager**
+
 
 ## Repository Contents
 - `../Coach/Guides`

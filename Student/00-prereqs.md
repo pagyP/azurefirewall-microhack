@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The elements of hack are using a predefined Terraform template to deploy the base environment. You will deploy these resources in your Azure subscription in two differents Azure regions: *Brazil South and EastUS2*. 
+All the elements of hack are using a predefined Terraform template to deploy the base environment. You will deploy these resources in your Azure subscription in two differents Azure regions.
 
 At the end of this section, your base environment build looks as follows:</br>
 
@@ -12,8 +12,11 @@ At the end of this section, your base environment build looks as follows:</br>
 
 In Summary:
 
-You will create:
-    - Two Azure Firewall in 
+- Azure contains a Hub and Spoke topology in the each regions, containing a vitual machines in the spokes vNETs (Brazil South: azbrsouthvm01, azbrsouthvm02 and EastUS2: azeastus2vm01) and Azure Firewall in the each hub vNET  **eastus2-hub-firewall** and **brazilsouth-hub-firewall**.
+- On-Premises contain a virtual machine (onprem-mgmt-vm) and enviroment simulated by Azure Virtual Network.
+- Azure Bastion is deployed in all hub VNets to enable RDP and SSH connection.
+- All of the workloads is deployed within a resource group called: *wth-azurefirewall-rg*.
+
 ## Description
 
 In this challenge we'll be setting up all the tools we will need to complete our challenges.
@@ -41,7 +44,7 @@ az account set --subscription "My Subscription"
 git clone https://github.com/adicout/microhack/
 ```
 
-- Go to the folder azure-firewall/terraform and initialize the terraform modules and download the azurerm resource provider
+- Go to the folder students/terraform and initialize the terraform modules and download the azurerm resource provider
 
 ```azure cli
 terraform init
