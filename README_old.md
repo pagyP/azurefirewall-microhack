@@ -1,4 +1,4 @@
-## **Protect your Enviroment with Azure Firewall and Firewall Manager Microhack**
+## **Protect your workloads with Azure Firewall and Firewall Manager Microhack**
 
 ## Contents:
 1. [Introduction](#introduction)</br>
