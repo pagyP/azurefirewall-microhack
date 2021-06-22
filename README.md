@@ -1,25 +1,21 @@
 # What The Hack - Protect your workloads with Azure Firewall Premium
 ## Introduction
-Azure Firewall is a managed, cloud-based network security service that protects your Azure Virtual Network resources. It's a fully stateful firewall as a service with built-in high availability and unrestricted cloud scalability. It`s part of the core complement for security in your Azure virtual network and improves security maturity organizations when deciding to implement the Zero Trust model.
+The adoption of Internet use throughout the business world has boosted network usage in general. Organizations are using various network security measures such as firewalls, intrusion detection systems (IDS), intrusion prevention systems (IPS) to protect their networks (even for cloud computing), which are the preferred targets of hackers for compromising organizations’ security. The Azure Firewall is a managed, cloud-based network security service that protects your Azure Virtual Network resources. Students will engage in a complex Azure Network security setup using the Azure Firewall to complete the challenges in these WTH exercises. You will set up rules for Network, Application, IDPs, TLS Inspection and Web Categories.
 
 This hack includes a optional [lecture presentation](Coach/Lectures.pptx) that features short presentations to introduce key topics associated with Azure Firewall Premium. It is recommended that the host present each short presentation before attendees kick off that challenge.
-### Scenario
-Contoso, Ltd. is a consulting company with the main office in Brazil and another branch office in the US; they are using Azure to host their workloads in two different regions. As part of their cloud journey, the Security and Cloud Team has started to look at a security cloud-native solution as the Azure Firewall.
 
 ## Learning Objectives
 
 After completing this Hack you will be able to:
 
-- How to configure Azure Firewall with capabilities that are required for highly sensitive and regulated environments.
 - How to implement Azure Firewall and Firewall Manager to control hybrid and cross-virtual network traffic.
-- How to monitor network traffic for proper route configuration and troubleshooting.
-- How to bypass system routing to accomplish custom routing scenarios.
-- How to implement the Azure Sentinel to monitoring and generated security incident alerts base on Azure Firewall issues.
-- How to set up and configure Azure Firewall policies.
+- How to implement the Azure Sentinel to monitoring and generated security incident alerts.
+- How to detect malicious network attack.
+- How to set up policies rules on Azure Firewall Premium.
 
 ## Challenges
 - Challenge 0: **[Prerequisites!](Student/00-prereqs.md)**
-   - Prepare your enviroment on Azure
+   - Prepare your enviroment on Azure with terraform and Az Cli code.
 - Challenge 1: **[Intra-region Forwarding](Student/01-intra-forwarding.md)**
    - Package the "FabMedical" app into a Docker container and run it locally.
 - Challenge 2: **[Inter-region Forwarding](Student/02-acr.md)**
@@ -45,20 +41,17 @@ After completing this Hack you will be able to:
    
 ## Prerequisites
 
-The purpose of this Hack is to build an understanding of the use of Azure Firewall with a focus on the network and security capabilities recently introduced. Please consider the following articles required as pre-reading to build a foundation of knowledge.
+The purpose of this Hack is to build an understanding of the use of Azure Firewall with a focus on the network and security capabilities recently introduced. Consider the following articles required as pre-reading to build a foundation of knowledge.
 
-[What is Azure Firewall?](https://docs.microsoft.com/en-us/azure/firewall/overview)</br>
-[Azure Firewall features](https://docs.microsoft.com/en-us/azure/firewall/features)</br>
-[What is Azure Firewall Manager?](https://docs.microsoft.com/en-us/azure/firewall-manager/overview)
-
+[Azure Network Security Ninja Training - 1.2.2 Azure Firewall and Azure Firewall Manager](https://techcommunity.microsoft.com/t5/azure-network-security/azure-network-security-ninja-training/ba-p/2356101)
 
 ## Repository Contents
 - `../Coach/Guides`
-  - [Lecture presentation](Coach/Lectures.pptx) with short presentations to introduce each challenge.
+  - [Lecture presentation](Coach/Lectures.pptx) with short presentations to introduce the Azure Firewall.
 - `../Coach/Solutions`
    - Example solutions to the challenges (If you're a student, don't cheat yourself out of an education!)
 - `../Student/Resources`
-   - FabMedial app code and sample templates to aid with challenges
+   - Terraform code to build the enviroment and sample templates to aid with challenges.
 
 ## Contributors
 - Adilson Coutrin
