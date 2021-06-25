@@ -4,7 +4,7 @@
 
 ## Introduction
 
-All the elements of hack are using a predefined Terraform template to deploy the base environment. You will deploy these resources in your Azure subscription in two differents Azure regions.
+Azure Network Security is an extensive topic, and you have lots of choices when it comes to the solution as native or custom (NVA) depends on requirements. All the elements of the hack are using a predefined Terraform template to deploy the base environment. You will deploy these resources in your Azure subscription in two differents Azure regions.
 
 At the end of this section, your base environment build looks as follows:</br>
 
@@ -19,7 +19,7 @@ In Summary:
 
 ## Description
 
-In this challenge we'll be setting up all the tools we will need to complete our challenges.
+In this challenge we will setup the core components needed to complete this What the Hack.
 
 ### Task 1 - Deploy the Environment
 
