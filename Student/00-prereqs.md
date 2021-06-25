@@ -76,51 +76,7 @@ Verify if you can access all four virtual machines via Azure Bastion, using the 
 - *Username: azureadmin*</br>
 - *Password: HackP@ssw0rd* 
 
-### Task 3 - Create a Log Analytics Workspace
-
-As part of the Microhack you will require to create a workspace in the log Analytics to sent the Azure Firewall diagnostic logs. 
-
-1. Login to Azure Portal [https://portal.azure.com/](https://portal.azure.com/)
-    - To start Azure Cloud Shell:
-        - Select the Cloud Shell button on the menu bar at the upper right in the Azure portal. ->
-
-    ![Menu](images/hdi-cloud-shell-menu.png)
-
-2. Run the follow command: 
-
-```azure cli
-az monitor log-analytics workspace create -g firewall-microhack-rg  -n azurenetworkmonitor 
-```
-:exclamation: In workspace name **Enter Unique Name all lowercase**
-
-2. Validate if **Log Analytics** created in the Azure Portal, under the Log Analytics Workspace.
-
-``` Azure CLI
-az monitor log-analytics workspace list -g firewall-microhack-rg  --output table
-```
-
-:point_right: Check on the Azure portal under the resource group if the resource is created.
-### Task 4: Enable diagnostic logging for Azure Firewall
-
-1. In the Azure portal, open the Azure Cloud Shell:
-
-    - Select the Cloud Shell button on the menu bar at the upper right in the Azure portal. 
-
-    ![](./images/hdi-cloud-shell-menu.png)
-
-2. Run the follow command: 
-
-```azure cli
-az monitor diagnostic-settings create -n 'toLogAnalytics'
-   --resource '/subscriptions/<subscriptionId>/resourceGroups/firewall-microhack-rg/providers/Microsoft.Network/azureFirewalls/brazilsouth-hub-firewall'
-   --workspace '/subscriptions/<subscriptionId>/resourceGroups/firewall-microhack-rg/providers/microsoft.operationalinsights/workspaces/<workspace name>'
-   --logs '[{\"category\":\"AzureFirewallApplicationRule\",\"Enabled\":true}, {\"category\":\"AzureFirewallNetworkRule\",\"Enabled\":true}, {\"category\":\"AzureFirewallDnsProxy\",\"Enabled\":true}]' 
-   --metrics '[{\"category\": \"AllMetrics\",\"enabled\": true}]'
-```
-3. Verify if **diagnostic settings** created in the Azure Portal>Firewall, Under Monitoring, select Diagnostic settings.
-
-:point_right: Repeat at the same steps 2 and 3 for **eastus2-hub-firewall**
-
+### Task 3: Enable Azure Firewall Workbook on Azure Sentinel
 
 ## Success Criteria
 
