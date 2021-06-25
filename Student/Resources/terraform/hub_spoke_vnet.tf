@@ -164,12 +164,12 @@ resource "azurerm_public_ip" "brazilsouth-hub-firewall-pip" {
 }
 
 resource "azurerm_firewall" "eastus2-hub-firewall" {
-  depends_on=[azurerm_public_ip.eastus2-hub-firewall-pip, azurerm_firewall_policy.eastus2-hub-firewall-Policy]
+  depends_on=[azurerm_public_ip.eastus2-hub-firewall-pip, azurerm_firewall_policy.base-firewall-Policy]
   name = "eastus2-hub-firewall"
   resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
   location = "eastus2"
   sku_tier = "Premium"
-  firewall_policy_id = azurerm_firewall_policy.eastus2-hub-firewall-Policy.id
+  firewall_policy_id = azurerm_firewall_policy.base-firewall-Policy.id
   ip_configuration {
     name = "eastus2-hub-firewall"
     subnet_id = azurerm_subnet.eastus2-hub-firewall-subnet.id
@@ -184,12 +184,12 @@ resource "azurerm_firewall" "eastus2-hub-firewall" {
 }
 
 resource "azurerm_firewall" "brazilsouth-hub-firewall" {
-  depends_on=[azurerm_public_ip.brazilsouth-hub-firewall-pip, azurerm_firewall_policy.brazilsouth-hub-firewall-Policy]
+  depends_on=[azurerm_public_ip.brazilsouth-hub-firewall-pip, azurerm_firewall_policy.base-firewall-Policy]
   name = "brazilsouth-hub-firewall"
   resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
   location = "brazilsouth"
   sku_tier = "Premium"
-  firewall_policy_id = azurerm_firewall_policy.brazilsouth-hub-firewall-Policy.id
+  firewall_policy_id = azurerm_firewall_policy.base-firewall-Policy.id
   ip_configuration {
     name = "brazilsouth-hub-firewall"
     subnet_id = azurerm_subnet.brazilsouth-hub-firewall-subnet.id
@@ -864,16 +864,9 @@ resource "azurerm_monitor_diagnostic_setting" "eastus2-hub-firewall-diag" {
 #######################################################################
 ## Azure Firewall Policy
 #######################################################################
-resource "azurerm_firewall_policy" "brazilsouth-hub-firewall-Policy" {
-  name                = "azfw-policy-brsouth-std"
+resource "azurerm_firewall_policy" "base-firewall-Policy" {
+  name                = "azfw-policy-base"
   resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
   location            = "brazilsouth"
-  sku                 =  "Premium"
-}
-
-resource "azurerm_firewall_policy" "eastus2-hub-firewall-Policy" {
-  name                = "azfw-policy-eastus2-std"
-  resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
-  location            = "eastus2"
   sku                 =  "Premium"
 }

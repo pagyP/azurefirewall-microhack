@@ -76,7 +76,7 @@ Verify if you can access all four virtual machines via Azure Bastion, using the 
 - *Username: azureadmin*</br>
 - *Password: HackP@ssw0rd* 
 
-### Task 3: Enable Azure Firewall Workbook on Azure Sentinel
+### Task 3: Integrate Azure Firewall Solution through Azure Sentinel
 
 ## Success Criteria
 
