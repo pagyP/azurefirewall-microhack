@@ -30,9 +30,9 @@ resource "azurerm_virtual_network" "brazilsouth-hub-vnet" {
   address_space       = ["10.200.0.0/16"]
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_virtual_network" "eastus2-spoke1-vnet" {
@@ -42,9 +42,9 @@ resource "azurerm_virtual_network" "eastus2-spoke1-vnet" {
   address_space       = ["10.10.1.0/24"]
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_virtual_network" "brazilsouth-spoke1-vnet" {
@@ -54,9 +54,9 @@ resource "azurerm_virtual_network" "brazilsouth-spoke1-vnet" {
   address_space       = ["10.20.1.0/24"]
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_virtual_network" "brazilsouth-spoke2-vnet" {
@@ -66,9 +66,9 @@ resource "azurerm_virtual_network" "brazilsouth-spoke2-vnet" {
   address_space       = ["10.20.2.0/24"]
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -144,9 +144,9 @@ resource "azurerm_public_ip" "eastus2-hub-firewall-pip" {
   sku                 = "Standard"
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_public_ip" "brazilsouth-hub-firewall-pip" {
@@ -157,18 +157,19 @@ resource "azurerm_public_ip" "brazilsouth-hub-firewall-pip" {
   sku                 = "Standard"
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
 resource "azurerm_firewall" "eastus2-hub-firewall" {
-  depends_on=[azurerm_public_ip.eastus2-hub-firewall-pip]
+  depends_on=[azurerm_public_ip.eastus2-hub-firewall-pip, azurerm_firewall_policy.eastus2-hub-firewall-Policy]
   name = "eastus2-hub-firewall"
   resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
   location = "eastus2"
   sku_tier = "Premium"
+  firewall_policy_id = azurerm_firewall_policy.eastus2-hub-firewall-Policy.id
   ip_configuration {
     name = "eastus2-hub-firewall"
     subnet_id = azurerm_subnet.eastus2-hub-firewall-subnet.id
@@ -176,18 +177,19 @@ resource "azurerm_firewall" "eastus2-hub-firewall" {
   }
  
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
 resource "azurerm_firewall" "brazilsouth-hub-firewall" {
-  depends_on=[azurerm_public_ip.brazilsouth-hub-firewall-pip]
+  depends_on=[azurerm_public_ip.brazilsouth-hub-firewall-pip, azurerm_firewall_policy.brazilsouth-hub-firewall-Policy]
   name = "brazilsouth-hub-firewall"
   resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
   location = "brazilsouth"
   sku_tier = "Premium"
+  firewall_policy_id = azurerm_firewall_policy.brazilsouth-hub-firewall-Policy.id
   ip_configuration {
     name = "brazilsouth-hub-firewall"
     subnet_id = azurerm_subnet.brazilsouth-hub-firewall-subnet.id
@@ -195,9 +197,9 @@ resource "azurerm_firewall" "brazilsouth-hub-firewall" {
   }
  
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -214,9 +216,9 @@ resource "azurerm_public_ip" "eastus2-hub-bastion-pip" {
   sku                 = "Standard"
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_public_ip" "brazilsouth-hub-bastion-pip" {
@@ -227,9 +229,9 @@ resource "azurerm_public_ip" "brazilsouth-hub-bastion-pip" {
   sku                 = "Standard"
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_bastion_host" "eastus2-hub-bastion-host" {
@@ -244,9 +246,9 @@ resource "azurerm_bastion_host" "eastus2-hub-bastion-host" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_bastion_host" "brazilsouth-hub-bastion-host" {
@@ -261,9 +263,9 @@ resource "azurerm_bastion_host" "brazilsouth-hub-bastion-host" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -323,9 +325,9 @@ resource "azurerm_network_interface" "azeastus2vm01-nic" {
   }
 
   tags = {
-    environment = "microhack "
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_network_interface" "azbrsouthvm01-nic" {
@@ -341,9 +343,9 @@ resource "azurerm_network_interface" "azbrsouthvm01-nic" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_network_interface" "azbrsouthvm02-nic" {
@@ -359,9 +361,9 @@ resource "azurerm_network_interface" "azbrsouthvm02-nic" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -402,9 +404,9 @@ resource "azurerm_virtual_machine" "azeastus2vm01" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_virtual_machine" "azbrsouthvm01" {
@@ -439,9 +441,9 @@ resource "azurerm_virtual_machine" "azbrsouthvm01" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -453,33 +455,31 @@ resource "azurerm_virtual_machine" "azbrsouthvm02" {
   vm_size               = var.vmsize
 
   storage_image_reference {
-    offer     = "WindowsServer"
-    publisher = "MicrosoftWindowsServer"
-    sku       = "2019-Datacenter"
+    offer     = "UbuntuServer"
+    publisher = "Canonical"
+    sku       = "18.04-LTS"
     version   = "latest"
   }
-
   storage_os_disk {
     name              = "azbrsouthvm02-osdisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
-  }
+   }
 
   os_profile {
     computer_name  = "azbrsouthvm02"
     admin_username = var.username
     admin_password = var.password
   }
-
-  os_profile_windows_config {
-    provision_vm_agent = true
+  os_profile_linux_config {
+    disable_password_authentication = false
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -523,9 +523,9 @@ resource "azurerm_virtual_network_gateway" "eastus2-hub-vpn-gateway" {
   depends_on = [azurerm_public_ip.eastus2-hub-vpn-gateway-pip]
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_virtual_network_gateway" "brazilsouth-hub-vpn-gateway" {
@@ -549,9 +549,9 @@ resource "azurerm_virtual_network_gateway" "brazilsouth-hub-vpn-gateway" {
   depends_on = [azurerm_public_ip.brazilsouth-hub-vpn-gateway-pip]
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -584,9 +584,9 @@ resource "azurerm_virtual_network_gateway_connection" "onprem-eastus2-hub-conn" 
   shared_key = local.shared-key
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_virtual_network_gateway_connection" "brazilsouth-hub-onprem-conn" {
@@ -614,9 +614,9 @@ resource "azurerm_virtual_network_gateway_connection" "onprem-brazilsouth-hub-co
   shared_key = local.shared-key
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -702,9 +702,9 @@ resource "azurerm_route_table" "rt-eastus2-spoke1-vmsubnet" {
   disable_bgp_route_propagation = false
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_route_table" "rt-brazilsouth-spoke1-vmsubnet" {
@@ -714,9 +714,9 @@ resource "azurerm_route_table" "rt-brazilsouth-spoke1-vmsubnet" {
   disable_bgp_route_propagation = false
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_route_table" "rt-brazilsouth-spoke2-vmsubnet" {
@@ -726,9 +726,9 @@ resource "azurerm_route_table" "rt-brazilsouth-spoke2-vmsubnet" {
   disable_bgp_route_propagation = false
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_route_table" "rt-brazilsouth-intercnn-fwsubnet" {
@@ -738,9 +738,9 @@ resource "azurerm_route_table" "rt-brazilsouth-intercnn-fwsubnet" {
   disable_bgp_route_propagation = true
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 resource "azurerm_route_table" "rt-eastus2-intercnn-fwsubnet" {
@@ -750,9 +750,130 @@ resource "azurerm_route_table" "rt-eastus2-intercnn-fwsubnet" {
   disable_bgp_route_propagation = true
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
+#######################################################################
+## Azure Sentinel and Log Analytics
+#######################################################################
+resource "azurerm_log_analytics_workspace" "loganalytics-workspace-azfw" {
+  name                = "aznetsecmonitor"
+  location            = "brazilsouth"
+  resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
+  sku                 = "free"
+
+  tags ={
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
+  }
+}
+resource "azurerm_log_analytics_solution" "loganalytics-solution-sentinel" {
+  solution_name         = "SecurityInsights"
+  location              = "brazilsouth"
+  resource_group_name   = azurerm_resource_group.firewall-microhack-rg.name
+  workspace_resource_id = azurerm_log_analytics_workspace.loganalytics-workspace-azfw.id
+  workspace_name        = azurerm_log_analytics_workspace.loganalytics-workspace-azfw.name
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/SecurityInsights"
+  }
+}
+
+#######################################################################
+## Enable Diagnostic Settings
+#######################################################################
+
+resource "azurerm_monitor_diagnostic_setting" "brazilsouth-hub-firewall-diag" {
+  name               = "to_log_analytics"
+  target_resource_id = azurerm_firewall.brazilsouth-hub-firewall.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.loganalytics-workspace-azfw.id
+
+  log {
+    category = "AzureFirewallApplicationRule"
+    
+    retention_policy {
+      enabled = false
+    }
+  }
+
+    log {
+    category = "AzureFirewallNetworkRule"
+    
+    retention_policy {
+      enabled = false
+    }
+  }
+
+     log {
+    category = "AzureFirewallDnsProxy"
+    
+    retention_policy {
+      enabled = false
+    }
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = false
+    }
+  }
+}
+
+resource "azurerm_monitor_diagnostic_setting" "eastus2-hub-firewall-diag" {
+  name               = "to_log_analytics"
+  target_resource_id = azurerm_firewall.eastus2-hub-firewall.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.loganalytics-workspace-azfw.id
+
+  log {
+    category = "AzureFirewallApplicationRule"
+    
+    retention_policy {
+      enabled = false
+    }
+  }
+
+    log {
+    category = "AzureFirewallNetworkRule"
+    
+    retention_policy {
+      enabled = false
+    }
+  }
+
+     log {
+    category = "AzureFirewallDnsProxy"
+    
+    retention_policy {
+      enabled = false
+    }
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = false
+    }
+  }
+}
+
+#######################################################################
+## Azure Firewall Policy
+#######################################################################
+resource "azurerm_firewall_policy" "brazilsouth-hub-firewall-Policy" {
+  name                = "azfw-policy-brsouth-std"
+  resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
+  location            = "brazilsouth"
+  sku                 =  "Premium"
+}
+
+resource "azurerm_firewall_policy" "eastus2-hub-firewall-Policy" {
+  name                = "azfw-policy-eastus2-std"
+  resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
+  location            = "eastus2"
+  sku                 =  "Premium"
+}

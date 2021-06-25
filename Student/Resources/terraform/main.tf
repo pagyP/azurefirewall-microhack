@@ -1,5 +1,5 @@
 provider "azurerm" {
-  version = "=2.46.0"
+  version = "=2.64.0"
   features {}
 }
 
@@ -8,12 +8,12 @@ provider "azurerm" {
 #######################################################################
 
 resource "azurerm_resource_group" "firewall-microhack-rg" {
-  name     = "firewall-microhack-rg"
+  name     = "wth-azurefirewall-rg"
   location = "eastus2"
 
   tags = {
-    environment = "microhack"
+    environment = "wth"
     deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+    wth   = "Network Security with Azure Firewall Premium"
   }
 }

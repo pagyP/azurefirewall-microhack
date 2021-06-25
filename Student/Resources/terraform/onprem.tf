@@ -11,9 +11,9 @@ resource "azurerm_virtual_network" "onprem-vnet" {
   dns_servers         = ["192.168.0.4"]
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -54,9 +54,9 @@ resource "azurerm_public_ip" "onprem-bastion-pip" {
   sku                 = "Standard"
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -76,9 +76,9 @@ resource "azurerm_bastion_host" "onprem-bastion-host" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -99,9 +99,9 @@ resource "azurerm_network_interface" "onpremvm01-nic" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -142,9 +142,9 @@ resource "azurerm_virtual_machine" "onpremvm01" {
   }
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }
 
@@ -180,8 +180,8 @@ resource "azurerm_virtual_network_gateway" "onprem-vpn-gateway" {
   depends_on = [azurerm_public_ip.onprem-vpn-gateway-pip]
 
   tags = {
-    environment = "microhack"
-    deployment  = "terraform"
-    microhack   = "Firewall and Firewall Manager"
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
   }
 }

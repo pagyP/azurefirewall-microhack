@@ -186,7 +186,7 @@ Verify again the routing on **azbrsouthvm01** using the Azure Cloud Shell or Azu
 
 After you finish the setup for UDR (**Task 1**) try to use ping tool between the virtual machines (**azbrsouthvm01 - 10.20.1.4** and **azbrsouthvm02 - 10.20.2.4**) and ckeck on the results in the Azure Log Analytics. You can use the below Kusto Query:
 
-```powershell
+```bash
 AzureDiagnostics
 | where Category == "AzureFirewallNetworkRule" and msg_s contains "10.20.1.4" and msg_s contains "ICMP"
 | parse msg_s with Protocol " request from " SourceIP ":" SourcePortInt:int " to " TargetIP ":" TargetPortInt:int *
@@ -203,6 +203,7 @@ TargetPort = tostring(TargetPortInt)
     TargetIP = case(TargetIP == "", TargetIP2, TargetIP)
 | project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action,Resource
 ```
+
 ![Azure Log Analytics](images/firewall-workspace.PNG)
 
 In the portal, navigate to the **Firewall Policies** named az-fw-policy-brsouth. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
