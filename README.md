@@ -2,10 +2,9 @@
 ## Introduction
 The adoption of Internet use throughout the business world has boosted network usage in general. Companies are using various network security measures such as firewalls, intrusion detection systems (IDS), intrusion prevention systems (IPS) to protect their networks (even for cloud computing), which are the preferred targets of threat actors for compromising organizations’ security. The Azure Firewall is a managed, cloud-based network security service that protects your resources inside the virtual network. You will engage in a complex Azure Network security setup using the Azure Firewall to complete the challenges in these WTH exercises. You will set up rules for Network, Application, IDPs, TLS Inspection and Web Categories.
 
-This hack includes a optional [lecture presentation](Coach/Lectures.pptx) that features short presentations to introduce key topics associated with Azure Firewall Premium. It is recommended that the host present each short presentation before attendees kick off that challenge.
-
 ![Azure Firewall](/Student/images/firewall-threat.png)
 
+This hack includes a optional [lecture presentation](Coach/Lectures.pptx) that features short presentations to introduce key topics associated with Azure Firewall Premium. It is recommended that the host present each short presentation before attendees kick off that challenge.
 ## Learning Objectives
 
 After completing this Hack you will be able to:
