@@ -68,8 +68,8 @@ After the Terraform deployment concludes successfully, verify if the resources h
 
     ![Menu](images/hdi-cloud-shell-menu.png)
 
-```azure cli
-az resource list --name firewall-microhack-rg
+```bash
+az resource list --name wth-azurefirewall-rg
 ```
 Verify if you can access all four virtual machines via Azure Bastion, using the following information:
 
