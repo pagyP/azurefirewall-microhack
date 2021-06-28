@@ -41,7 +41,7 @@ az account set --subscription "My Subscription"
 - Clone the following GitHub repository 
 
 ```azure cli
-git clone https://github.com/adicout/microhack/
+git clone https://github.com/adicout/azurefirewall-microhack
 ```
 
 - Go to the folder students/terraform and initialize the terraform modules and download the azurerm resource provider

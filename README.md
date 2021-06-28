@@ -4,6 +4,7 @@ The adoption of Internet use throughout the business world has boosted network u
 
 ![Azure Firewall](/Student/images/firewall-threat.png)
 
+
 This hack includes a optional [lecture presentation](Coach/Lectures.pptx) that features short presentations to introduce key topics associated with Azure Firewall Premium. It is recommended that the host present each short presentation before attendees kick off that challenge.
 ## Learning Objectives
 
