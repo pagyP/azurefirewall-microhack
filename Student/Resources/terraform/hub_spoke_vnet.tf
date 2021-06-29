@@ -815,13 +815,6 @@ resource "azurerm_monitor_diagnostic_setting" "brazilsouth-hub-firewall-diag" {
       enabled = false
     }
   }
-  metric {
-    category = "AllMetrics"
-
-    retention_policy {
-      enabled = false
-    }
-  }
 }
 
 resource "azurerm_monitor_diagnostic_setting" "eastus2-hub-firewall-diag" {
@@ -852,20 +845,13 @@ resource "azurerm_monitor_diagnostic_setting" "eastus2-hub-firewall-diag" {
       enabled = false
     }
   }
-  metric {
-    category = "AllMetrics"
-
-    retention_policy {
-      enabled = false
-    }
-  }
-}
+ }
 
 #######################################################################
 ## Azure Firewall Policy
 #######################################################################
 resource "azurerm_firewall_policy" "base-firewall-Policy" {
-  name                = "wth-azfw-policy-base"
+  name                = "azfw-policy-std"
   resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
   location            = "brazilsouth"
   sku                 =  "Premium"
