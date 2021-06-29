@@ -73,8 +73,9 @@ az resource list --name wth-azurefirewall-rg
 ```
 Verify if you can access all four virtual machines via Azure Bastion, using the following information:
 
-- *Username: azureadmin*</br>
-- *Password: HackP@ssw0rd* 
+|  Username  |   Password   |
+| ---------  |--------------|
+| azureadmin | HackP@ssw0rd |
 
 ### Task 3: Integrate Azure Firewall Solution through Azure Sentinel
 
