@@ -8,44 +8,53 @@ The first step in our journey will be to take our application and package it as 
 
 ## Description
 
-In this challenge we'll be creating an Azure Linux VM, building, and running the node.js based FabMedical app on the VM to see it working. Then we'll be creating Dockerfiles to build a container image of the application.
+In this challenge, you will establish communication between spokes virtual networks using a firewall inside the hub virtual network to forward the networking traffic to the same region. You will then inspect effective routes on the spoke VMs and run the simple ping test.
 
-- Deploy an Azure VM using provided ARM Template and parameters file in the "Files" tab of the Team's General channel.
-	- The template deployment will ask you to provide an admin password for the VM. The 12-character password must meet 3 out of 4 of these criteria:
-	 	- Have lower characters
-		- Have upper characters
-		- Have a digit
-		- Have a special character 
+#### Task 1 - Deploy a User Defined Route for spokes virtual networks
 
-	- **NOTE:** To ssh into the build machine using port 2266 on the VMs public IP:
-    	- `ssh -p 2266 wthadmin@<VM Public IP>` 
-    	- Verify that docker and Azure CLI are installed on the VM.
-- Run the node.js application
-	- Each part of the app (api and web) runs independently.
-	- Build the API app by navigating to the content-api folder and run `npm install`.
-	- To start the app, run `node ./server.js &`
-	- Verify the API app runs by hitting its URL with one of the three function names. Eg: **<http://localhost:3001/speakers>**
-- Repeat for the steps above for the content-web app, but verify it's available via a browser on the Internet!
-	- **NOTE:** The content-web app expects an environment variable named `CONTENT_API_URL` that points to the API app's URL. 
-- Create a Dockerfile for the content-api app that will:
-	- Create a container based on the **node:8** container image
-	- Build the Node application like you did above (Hint: npm install)
-	- Exposes the needed port
-	- Starts the node application
+Connect to **azbrazilsouthvm01** via Bastion, open the command prompt and try to ping the **azbrazilsouthvm02**.
 
-- Create a Dockerfile for the content-web app that will:
-	- Do the same as the Dockerfile for the content-api
-	- Also sets the environment variable value as above
+:question: What is the result?
 
-- Build Docker images for both content-api and content-web
+Check the routing on **azbrsouthvm01**, using the Azure Cloud Shell:
 
-- Run both containers you just built and verify that it is working. 
-	- **Hint:** Run the containers in 'detached' mode so that they run in the background.
-	- **NOTE:** The containers need to run in the same network to talk to each other. 
-		- Create a Docker network named "fabmedical"
-		- Run each container using the "fabmedical" network
-		- **Hint:** Each container you run needs to have a "name" on the fabmedical network and this is how you access it from other containers on that network.
-		- **Hint:** You can run your containers in "detached" mode so that the running container does NOT block your command prompt.
+```azure cli
+az network nic show-effective-route-table -g firewall-microhack-rg -n azbrsouthvm01-nic --output table
+```
+:question: Any route to **azbrsouthvm02**?
+
+Configure a existing route table using the Azure Cloud Shell for subnet on the spokes virtual networks in Brazil South region.
+
+```azure cli
+az network route-table route create --name to-brazilsouth-spoke2 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke1-rt --address-prefix 10.20.2.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
+az network route-table route create --name to-brazilsouth-spoke1 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke2-rt --address-prefix 10.20.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
+az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke1-vnet  --resource-group firewall-microhack-rg  --route-table brazilsouth-spoke1-rt
+az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke2-vnet  --resource-group firewall-microhack-rg  --route-table brazilsouth-spoke2-rt
+```
+
+Verify again the routing on **azbrsouthvm01** using the Azure Cloud Shell or Azure Portal.
+
+#### Task 2 - Deploy Network rules inside the Azure Firewall
+
+After you finish the setup for UDR (**Task 1**) try to use ping tool between the virtual machines (**azbrsouthvm01 - 10.20.1.4** and **azbrsouthvm02 - 10.20.2.4**) and ckeck on the results in the Azure Log Analytics. You can use the below Kusto Query:
+
+```bash
+AzureDiagnostics
+| where Category == "AzureFirewallNetworkRule" and msg_s contains "10.20.1.4" and msg_s contains "ICMP"
+| parse msg_s with Protocol " request from " SourceIP ":" SourcePortInt:int " to " TargetIP ":" TargetPortInt:int *
+| parse msg_s with * ". Action: " Action1a
+| parse msg_s with * " was " Action1b " to " NatDestination
+| parse msg_s with Protocol2 " request from " SourceIP2 " to " TargetIP2 ". Action: " Action2
+| extend
+SourcePort = tostring(SourcePortInt),
+TargetPort = tostring(TargetPortInt)
+| extend 
+    Action = case(Action1a == "", case(Action1b == "",Action2,Action1b), Action1a),
+    Protocol = case(Protocol == "", Protocol2, Protocol),
+    SourceIP = case(SourceIP == "", SourceIP2, SourceIP),
+    TargetIP = case(TargetIP == "", TargetIP2, TargetIP)
+| project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action,Resource
+```
 
 ## Success Criteria
 

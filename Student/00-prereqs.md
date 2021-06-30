@@ -77,10 +77,12 @@ Verify if you can access all four virtual machines via Azure Bastion, using the 
 | ---------  |--------------|
 | azureadmin | HackP@ssw0rd |
 
-### Task 3: Integrate Azure Firewall Solution through Azure Sentinel
+### Task 3: Deploy the workbook for Azure Firewall
+
+1. Follow step-by-step in the [Monitor logs using Azure Firewall Workbook](https://docs.microsoft.com/en-us/azure/firewall/firewall-workbook/)  to deploy the workbook for Azure firewall in Log Analytics workspace.
 
 ## Success Criteria
 
 1. You have a bash shell at your disposal (WSL, Mac, Linux or Azure Cloud Shell)
-1. Running `az --version` shows the version of your Azure CLI
-1. Visual Studio Code is installed.
+2. Running `az --version` shows the version of your Azure CLI
+3. You have the base enviroment deployed by terraform.
