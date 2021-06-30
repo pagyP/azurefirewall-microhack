@@ -55,15 +55,51 @@ TargetPort = tostring(TargetPortInt)
     TargetIP = case(TargetIP == "", TargetIP2, TargetIP)
 | project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action,Resource
 ```
+![Azure Log Analytics](images/firewall-workspace.PNG)
 
+In the portal, navigate to the **Firewall Policies** named az-fw-policy-brsouth. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
+
+Under the "Add a rule collection", follow the below steps:
+
+- Name: **rule-allow-spokes-connection**
+- Rule collction type: **Network**
+- Priority: **100**
+- Rule Collection Action: **Allow**
+- Rule Collection Group: **DefaultNetworkRuleCollectionGroup**
+- Rules
+    - Name: **to-spoke1**
+    - Source Type: **IP Address**
+    - Source: **10.20.2.0/24**
+    - Protocol: **Any**
+    - Destination Ports: *
+    - Destination Type: **IP Address**
+    - Destination: **10.20.1.0/24**
+
+    - Name: **to-spoke2**
+    - Source Type: **IP Address**
+    - Source: **10.20.1.0/24**
+    - Protocol: **Any**
+    - Destination Ports: *
+    - Destination Type: **IP Address**
+    - Destination: **10.20.2.0/24**
+
+Wait for the complete the configuration. 
+
+:question: Can you reach the virtual machine **azbrsouthvm01 - 10.20.1.4** from **azbrsouthvm02 - 10.20.2.4** using the ping tool?
+## :checkered_flag: Results:
+
+- You now have the Intra-region forwarding in place.
+
+![Intra-region Forwarding Architecture](images/Intra-region-Forwarding.png)
 ## Success Criteria
 
-1. You can run both the node.js based web and api parts of the FabMedical app on the VM
-2. You have created 2 Dockerfiles files and created a container image for both web and api.
-3. You can run the application using containers.
+1. You can reach out the virtual machine in the spoke2 vnet
+2. You have updated 2 route table  for both spoke1 and spoke2.
+3. You can run ping tool to test the connection between virtual machines.
 
 ## Learning Resources
 
-- <https://nodejs.org/en/docs/guides/nodejs-docker-webapp/>
-- <https://buddy.works/guides/how-dockerize-node-application>
-- <https://www.cuelogic.com/blog/why-and-how-to-containerize-modern-nodejs-applications>
+- [Virtual network traffic routing ](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview)</br>
+- [Azure Firewall rule processing logic ](https://docs.microsoft.com/en-us/azure/firewall-manager/rule-processing)</br>
+- [Azure Firewall Manager policy overview ](https://docs.microsoft.com/en-us/azure/firewall-manager/policy-overview)</br>
+- [Deploy and configure Azure Firewall and policy using the Azure portal ](https://docs.microsoft.com/en-us/azure/firewall/tutorial-firewall-deploy-portal-policy)<
