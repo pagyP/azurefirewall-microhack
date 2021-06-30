@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The first step in our journey will be to take our application and package it as a container image using Docker.
+The first step in our journey will be to take a set up a communication between two spokes virtual network through Azure Firewall.
 
 ## Description
 
@@ -93,7 +93,7 @@ Wait for the complete the configuration.
 ![Intra-region Forwarding Architecture](images/Intra-region-Forwarding.png)
 ## Success Criteria
 
-1. You can reach out the virtual machine in the spoke2 vnet
+1. You can reach out the virtual machine in the spoke2 vnet.
 2. You have updated 2 route table  for both spoke1 and spoke2.
 3. You can run ping tool to test the connection between virtual machines.
 
