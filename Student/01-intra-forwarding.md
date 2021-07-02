@@ -19,17 +19,17 @@ Connect to **azbrazilsouthvm01** via Bastion, open the command prompt and try to
 Check the routing on **azbrsouthvm01**, using the Azure Cloud Shell:
 
 ```azure cli
-az network nic show-effective-route-table -g firewall-microhack-rg -n azbrsouthvm01-nic --output table
+az network nic show-effective-route-table -g wth-azurefirewall-rg -n azbrsouthvm01-nic --output table
 ```
 :question: Any route to **azbrsouthvm02**?
 
 Configure a existing route table using the Azure Cloud Shell for subnet on the spokes virtual networks in Brazil South region.
 
-```azure cli
-az network route-table route create --name to-brazilsouth-spoke2 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke1-rt --address-prefix 10.20.2.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
-az network route-table route create --name to-brazilsouth-spoke1 --resource-group firewall-microhack-rg --route-table-name brazilsouth-spoke2-rt --address-prefix 10.20.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
-az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke1-vnet  --resource-group firewall-microhack-rg  --route-table brazilsouth-spoke1-rt
-az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke2-vnet  --resource-group firewall-microhack-rg  --route-table brazilsouth-spoke2-rt
+```bash
+az network route-table route create --name to-brazilsouth-spoke2 --resource-group wth-azurefirewall-rg --route-table-name brazilsouth-spokes-rt --address-prefix 10.20.2.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
+az network route-table route create --name to-brazilsouth-spoke1 --resource-group wth-azurefirewall-rg --route-table-name brazilsouth-spokes-rt --address-prefix 10.20.1.0/24 --next-hop-type VirtualAppliance --next-hop-ip-address 10.200.3.4
+az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke1-vnet  --resource-group wth-azurefirewall-rg  --route-table brazilsouth-spokes-rt
+az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke2-vnet  --resource-group wth-azurefirewall-rg  --route-table brazilsouth-spokes-rt
 ```
 
 Verify again the routing on **azbrsouthvm01** using the Azure Cloud Shell or Azure Portal.
@@ -57,11 +57,11 @@ TargetPort = tostring(TargetPortInt)
 ```
 ![Azure Log Analytics](images/firewall-workspace.PNG)
 
-In the portal, navigate to the **Firewall Policies** named az-fw-policy-brsouth. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
+In the portal, navigate to the **Firewall Policies** named **azfw-policy-std**. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
 
 Under the "Add a rule collection", follow the below steps:
 
-- Name: **rule-allow-spokes-connection**
+- Name: **rule-allow-spokes-communication**
 - Rule collction type: **Network**
 - Priority: **100**
 - Rule Collection Action: **Allow**
@@ -69,19 +69,19 @@ Under the "Add a rule collection", follow the below steps:
 - Rules
     - Name: **to-spoke1**
     - Source Type: **IP Address**
-    - Source: **10.20.2.0/24**
+    - Source: **10.20.2.4**
     - Protocol: **Any**
     - Destination Ports: *
     - Destination Type: **IP Address**
-    - Destination: **10.20.1.0/24**
+    - Destination: **10.20.1.4**
 
     - Name: **to-spoke2**
     - Source Type: **IP Address**
-    - Source: **10.20.1.0/24**
+    - Source: **10.20.1.4**
     - Protocol: **Any**
     - Destination Ports: *
     - Destination Type: **IP Address**
-    - Destination: **10.20.2.0/24**
+    - Destination: **10.20.2.4**
 
 Wait for the complete the configuration. 
 
@@ -94,7 +94,7 @@ Wait for the complete the configuration.
 ## Success Criteria
 
 1. You can reach out the virtual machine in the spoke2 vnet.
-2. You have updated 2 route table  for both spoke1 and spoke2.
+2. You have updated 2 route table for both spoke1 and spoke2.
 3. You can run ping tool to test the connection between virtual machines.
 
 ## Learning Resources

@@ -732,7 +732,7 @@ resource "azurerm_route_table" "rt-brazilsouth-spoke2-vmsubnet" {
   }
 }
 resource "azurerm_route_table" "rt-brazilsouth-intercnn-fwsubnet" {
-  name                          = "brazilsouth-intercnn"
+  name                          = "brazilsouth-intercnn-rt"
   location                      = "brazilsouth"
   resource_group_name           = azurerm_resource_group.firewall-microhack-rg.name
   disable_bgp_route_propagation = true
@@ -856,3 +856,56 @@ resource "azurerm_firewall_policy" "base-firewall-Policy" {
   location            = "brazilsouth"
   sku                 =  "Premium"
 }
+
+#######################################################################
+## Azure Key Vault
+#######################################################################
+
+data "azurerm_client_config" "current" {}
+
+resource "azurerm_key_vault" "brazilsouth-keyvault" {
+  name                        = "aznetsecvault"
+  location                    = "brazilsouth"
+  resource_group_name         = azurerm_resource_group.firewall-microhack-rg.name
+  enabled_for_disk_encryption = true
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  sku_name = "standard"
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    key_permissions = [
+      "Get",
+      "List",
+
+    ]
+
+    certificate_permissions = [
+      "Get",
+      "List",
+      "Update",
+      "Import",
+      "Delete",
+      "Create",
+    ]
+
+
+    secret_permissions = [
+      "Get",
+      "List",
+  
+    ]
+
+    storage_permissions = [
+      "Get",
+      "List",
+    ]
+  }
+   tags ={
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
+  }
+}
+
