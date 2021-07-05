@@ -4,7 +4,7 @@ The adoption of Internet use throughout the business world has boosted network u
 
 
 <p align="center">
-  <img width="300" height="300" src="/Student/images/firewall-threat.jpg">
+  <img width="400" height="300" src="/Student/images/firewall-threat.jpg">
 </p>
 
 

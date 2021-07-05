@@ -1,11 +1,12 @@
-# Challenge 1: Got Containers?
+# Challenge 1: Intra-Forwarding Connection
 
 [< Previous Challenge](./00-prereqs.md) - **[Home](../README.md)** - [Next Challenge >](./02-acr.md)
 
 ## Introduction
 
-The first step in our journey will be to take a set up a communication between two spokes virtual network through Azure Firewall.
+The first step in our journey will be to take a set up a communication between two spokes virtual networks through Azure Firewall. At the end of the challenge, you will complete the setup and will have the Intra-region forwarding in place.
 
+![Intra-region Forwarding Architecture](images/Intra-region-Forwarding.png)
 ## Description
 
 In this challenge, you will establish communication between spokes virtual networks using a firewall inside the hub virtual network to forward the networking traffic to the same region. You will then inspect effective routes on the spoke VMs and run the simple ping test.
@@ -86,11 +87,7 @@ Under the "Add a rule collection", follow the below steps:
 Wait for the complete the configuration. 
 
 :question: Can you reach the virtual machine **azbrsouthvm01 - 10.20.1.4** from **azbrsouthvm02 - 10.20.2.4** using the ping tool?
-## :checkered_flag: Results:
 
-- You now have the Intra-region forwarding in place.
-
-![Intra-region Forwarding Architecture](images/Intra-region-Forwarding.png)
 ## Success Criteria
 
 1. You can reach out the virtual machine in the spoke2 vnet.
