@@ -22,9 +22,9 @@ After completing this Hack you will be able to:
 - Challenge 0: **[Prerequisites!](Student/00-prereqs.md)**
    - Prepare your enviroment on Azure with terraform and Az Cli code.
 - Challenge 1: **[Intra-region Forwarding](Student/01-intra-forwarding.md)**
-   - Package the "FabMedical" app into a Docker container and run it locally.
-- Challenge 2: **[Inter-region Forwarding](Student/02-acr.md)**
-   - Deploy an Azure Container Registry, secure it and publish your container.
+   - Establish the communication between two spokes virtual networks through Azure Firewall in the same region.
+- Challenge 2: **[Inter-region Forwarding](Student/02-inter-forwarding.md)**
+   - Establish the communication between two spokes virtual networks through Azure Firewall in the different regions.
 - Challenge 3: **[Introduction To Kubernetes](Student/03-k8sintro.md)**
    - Install the Kubernetes CLI tool, deploy an AKS cluster in Azure, and verify it is running.
 - Challenge 4: **[Your First Deployment](Student/04-k8sdeployment.md)**
