@@ -4,8 +4,9 @@
 
 ## Introduction
 
-The first step in our journey will be to take a set up a communication between two spokes virtual networks through Azure Firewall. At the end of the challenge, you will complete the setup and will have the Intra-region forwarding in place.
+Now you will explore other resoruces to complete the challenge and estabilsh the communication between other region and local datacenter.  At the end of the challenge, you will complete the setup and will have this scenario in place.
 
+![Intra-region Forwarding Architecture](images/Inter-region-Forwarding.png)
 
 ## Description
 
@@ -74,7 +75,7 @@ TargetPort = tostring(TargetPortInt)
 | project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action,Resource
 ```
 
-![Azure Log Analytics](images/firewall-workspace-inter1.PNG)
+![Azure Log Analytics](images/firewall-workbook-inter1.PNG)
 
 In the portal, navigate to the **Firewall Policies** named **azfw-policy-std**. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
 
