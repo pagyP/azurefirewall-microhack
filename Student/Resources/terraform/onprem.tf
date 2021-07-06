@@ -185,3 +185,5 @@ resource "azurerm_virtual_network_gateway" "onprem-vpn-gateway" {
      wth   = "Network Security with Azure Firewall Premium"
   }
 }
+
+

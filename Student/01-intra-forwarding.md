@@ -35,7 +35,7 @@ az network vnet subnet update --name vmsubnet --vnet-name brazilsouth-spoke2-vne
 
 Verify again the routing on **azbrsouthvm01** using the Azure Cloud Shell or Azure Portal.
 
-#### Task 2 - Deploy Network rules inside the Azure Firewall
+#### Task 2 - Deploy Network rules trought the Firewall Policies
 
 After you finish the setup for UDR (**Task 1**) try to use ping tool between the virtual machines (**azbrsouthvm01 - 10.20.1.4** and **azbrsouthvm02 - 10.20.2.4**) and ckeck on the results in the Azure Log Analytics. You can use the below Kusto Query:
 
@@ -56,6 +56,7 @@ TargetPort = tostring(TargetPortInt)
     TargetIP = case(TargetIP == "", TargetIP2, TargetIP)
 | project TimeGenerated, msg_s, Protocol, SourceIP,TargetIP,Action,Resource
 ```
+
 ![Azure Log Analytics](images/firewall-workspace.PNG)
 
 In the portal, navigate to the **Firewall Policies** named **azfw-policy-std**. Click on "Network Rules" under "Settings", and click "+ Add a rule collection " at the top of the page. 
@@ -71,7 +72,7 @@ Under the "Add a rule collection", follow the below steps:
     - Name: **to-spoke1**
     - Source Type: **IP Address**
     - Source: **10.20.2.4**
-    - Protocol: **Any**
+    - Protocol: **ICMP**
     - Destination Ports: *
     - Destination Type: **IP Address**
     - Destination: **10.20.1.4**
@@ -79,7 +80,7 @@ Under the "Add a rule collection", follow the below steps:
     - Name: **to-spoke2**
     - Source Type: **IP Address**
     - Source: **10.20.1.4**
-    - Protocol: **Any**
+    - Protocol: **ICMP**
     - Destination Ports: *
     - Destination Type: **IP Address**
     - Destination: **10.20.2.4**

@@ -695,11 +695,45 @@ resource "azurerm_virtual_network_peering" "hub-eastus2-brazilsouth-hub-vnet-pee
 ## Create UDR
 #######################################################################
 
+resource "azurerm_route_table" "rt-brsouth-gwsubnet" {
+  name                          = "brazilsouth-gwsubnet-rt"
+  location                      = "brazilsouth"
+  resource_group_name           = azurerm_resource_group.firewall-microhack-rg.name
+  disable_bgp_route_propagation = false
+
+  route {
+    name           = "to-onprem"
+    address_prefix = "192.168.0.0/24"
+    next_hop_type  = "VirtualAppliance"
+    next_hop_in_ip_address = "10.200.3.4" 
+  }
+
+   route {
+    name           = "to-brsouth"
+    address_prefix = "10.20.1.0/24"
+    next_hop_type  = "VirtualAppliance"
+    next_hop_in_ip_address = "10.200.3.4" 
+  }
+
+  tags = {
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
+  }
+}
+
 resource "azurerm_route_table" "rt-eastus2-spoke1-vmsubnet" {
   name                          = "eastus2-spokes-rt"
   location                      = "eastus2"
   resource_group_name           = azurerm_resource_group.firewall-microhack-rg.name
   disable_bgp_route_propagation = false
+
+  route {
+    name           = "to-onprem"
+    address_prefix = "192.168.0.0/24"
+    next_hop_type  = "VirtualAppliance"
+    next_hop_in_ip_address = "10.100.3.4" 
+  }
 
   tags = {
      environment = "wth"
@@ -712,6 +746,14 @@ resource "azurerm_route_table" "rt-brazilsouth-spoke1-vmsubnet" {
   location                      = "brazilsouth"
   resource_group_name           = azurerm_resource_group.firewall-microhack-rg.name
   disable_bgp_route_propagation = false
+
+
+  route {
+    name           = "to-onprem"
+    address_prefix = "192.168.0.0/24"
+    next_hop_type  = "VirtualAppliance"
+    next_hop_in_ip_address = "10.200.3.4" 
+  }
 
   tags = {
      environment = "wth"
@@ -755,6 +797,8 @@ resource "azurerm_route_table" "rt-eastus2-intercnn-fwsubnet" {
      wth   = "Network Security with Azure Firewall Premium"
   }
 }
+
+
 
 #######################################################################
 ## Azure Sentinel and Log Analytics
@@ -848,13 +892,32 @@ resource "azurerm_monitor_diagnostic_setting" "eastus2-hub-firewall-diag" {
  }
 
 #######################################################################
-## Azure Firewall Policy
+## Azure Firewall Policy and IP Group
 #######################################################################
 resource "azurerm_firewall_policy" "base-firewall-Policy" {
   name                = "azfw-policy-std"
   resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
   location            = "brazilsouth"
   sku                 =  "Premium"
+
+  tags = {
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
+  }
+}
+
+resource "azurerm_ip_group" "br-icmp-ipgroup" {
+  name                = "icmp-ipgroup"
+  location            = "brazilsouth"
+  resource_group_name = azurerm_resource_group.firewall-microhack-rg.name
+
+  tags = {
+     environment = "wth"
+     deployment  = "terraform"
+     wth   = "Network Security with Azure Firewall Premium"
+  }
+
 }
 
 #######################################################################
