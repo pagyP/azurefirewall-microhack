@@ -1,4 +1,4 @@
-# Challenge 1: Inter-Forwarding and On-premisses Connection
+# Challenge 2: Inter-Forwarding and On-premisses Connection
 
 [< Previous Challenge](./00-prereqs.md) - **[Home](../README.md)** - [Next Challenge >](./02-acr.md)
 
@@ -108,8 +108,8 @@ Wait for the complete the configuration.
 :question: Can you reach the virtual machines **azeastus2vm01 - 10.10.1.4** and **onpremvm01 - 192.168.0.4** ?
 ## Success Criteria
 
-1. You can reach out the virtual machine in eastus2 region and onpremisses.
-2. You have updated 2 route table for both spoke1 and spoke2.
+1. You can reach out the virtual machine in eastus2 region and local datacenter.
+2. You have updated 5 route tables for complete it.
 3. You can run ping tool to test the connection between virtual machines.
 
 ## Learning Resources
