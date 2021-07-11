@@ -25,10 +25,10 @@ After completing this Hack you will be able to:
    - Establish the communication between two spokes virtual networks through Azure Firewall in the same region.
 - Challenge 2: **[Inter-region Forwarding](Student/02-inter-forwarding.md)**
    - Establish the communication between two spokes virtual networks through Azure Firewall in the different regions.
-- Challenge 3: **[Introduction To Kubernetes](Student/03-k8sintro.md)**
-   - Install the Kubernetes CLI tool, deploy an AKS cluster in Azure, and verify it is running.
-- Challenge 4: **[Your First Deployment](Student/04-k8sdeployment.md)**
-   - Pods, Services, Deployments: Getting your YAML on! Deploy the "FabMedical" app to your AKS cluster. 
+- Challenge 3: **[Threat Intelligence](Student/03-threat-intelligence.md)**
+   - Setup the Thread Intelligence and verify it is running.
+- Challenge 4: **[Enable the DNS Proxy](Student/04-dns-proxy.md)**
+   - Configure the DNS proxy.
 - Challenge 5: **[Scaling and High Availability](Student/05-scaling.md)**
    - Flex Kubernetes' muscles by scaling pods, and then nodes. Observe how Kubernetes responds to resource limits.
 - Challenge 6: **[Deploy MongoDB to AKS](Student/06-deploymongo.md)**
