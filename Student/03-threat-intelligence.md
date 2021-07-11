@@ -11,7 +11,7 @@ Threat intelligence is a mechanism that provides information about threats and t
 
 You will set up the threat intelligence-based filtering mode as Alert and Deny when a virtual machine in Brazil Region tries to connect a malicious domain will be generated a log with the trigger. This setup will be done using the Firewall Policies.
 
-#### Task 1 - Enable Threat intelligence-based
+#### Task 1 - Verify the Threat Intelligence-Based
 
 To start the setup, follow the steps listed below:
 
@@ -33,14 +33,11 @@ az account set --subscription "My Subscription"
 az network firewall policy rule-collection-group collection add-filter-collection -g wth-azurefirewall-rg --policy-name azfw-policy-std --rule-collection-group-name DefaultApplicationRuleCollectionGroup --name rule-allow-site-threat-intell --action Allow --rule-name allow-site-threat-intell --rule-type ApplicationRule --source-addresses "10.20.1.4" --protocols Http=80 --target-fqdns testmaliciousdomain.eastus.cloudapp.azure.com --collection-priority 11100
 ```
 
-Connect to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command prompt and execute it:
+Connect to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command prompt, and run it:
 
 ```cmd
 curl testmaliciousdomain.eastus.cloudapp.azure.com
 ```
-
-:notebook_with_decorative_cover:To help test outbound alerts are working, a test FQDN has been created that triggers an alert. Use testmaliciousdomain.eastus.cloudapp.azure.com for your outbound tests.
-
 
 :question: What is the behavior, after you execute the curl command?
 
@@ -67,26 +64,21 @@ Follow the steps 1 and 2 of **Task 1** and run it Az cli command.
 ```bash
 az network firewall policy update --name azfw-policy-std -g wth-azurefirewall-rg --threat-intel-mode Deny --sku Premium
 ```
-Connect to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command prompt and execute it:
+Connect to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command prompt and run it:
 
 ```cmd
 curl testmaliciousdomain.eastus.cloudapp.azure.com
 ```
-
 :question: What is the result?
 
-![Azure Log Analytics](images/Firewall-Thread-Intell-Deny.PNG)
+![Azure Log Analytics](images/Firewall-Thread-Intell-deny.PNG)
 
 ## Success Criteria
 
-1. You can reach out the virtual machine in eastus2 region and local datacenter.
-2. You have updated 5 route tables for complete it.
-3. You can run ping tool to test the connection between virtual machines.
+1. You have updated the Firewall policy with the application rule
+2. You have updated the Thread Intelligence mode.
+3. You block the malicious domain when you try to access it.
 
 ## Learning Resources
 
-- [Virtual network traffic routing ](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview)</br>
-- [Azure Firewall rule processing logic ](https://docs.microsoft.com/en-us/azure/firewall-manager/rule-processing)</br>
-- [Azure Firewall Manager policy overview ](https://docs.microsoft.com/en-us/azure/firewall-manager/policy-overview)</br>
-- [Deploy and configure Azure Firewall and policy using the Azure portal ](https://docs.microsoft.com/en-us/azure/firewall/tutorial-firewall-deploy-portal-policy)</br>
-- [IP Groups in Azure Firewall ](https://docs.microsoft.com/bs-latn-ba/azure/firewall/ip-groups)
+- [Virtual network traffic routing ](https://docs.microsoft.com/en-us/azure/firewall-manager/threat-intelligence-settings)
