@@ -81,4 +81,4 @@ curl testmaliciousdomain.eastus.cloudapp.azure.com
 
 ## Learning Resources
 
-- [Virtual network traffic routing ](https://docs.microsoft.com/en-us/azure/firewall-manager/threat-intelligence-settings)
+- [Threat Intelligence-Based ](https://docs.microsoft.com/en-us/azure/firewall-manager/threat-intelligence-settings)
