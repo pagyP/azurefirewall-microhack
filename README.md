@@ -29,21 +29,7 @@ After completing this Hack you will be able to:
    - Setup the Thread Intelligence and verify it is running.
 - Challenge 4: **[Enable the DNS Proxy](Student/04-dns-proxy.md)**
    - Configure the DNS proxy.
-- Challenge 5: **[Scaling and High Availability](Student/05-scaling.md)**
-   - Flex Kubernetes' muscles by scaling pods, and then nodes. Observe how Kubernetes responds to resource limits.
-- Challenge 6: **[Deploy MongoDB to AKS](Student/06-deploymongo.md)**
-   - Deploy MongoDB to AKS from a public container registry.
-- Challenge 7: **[Updates and Rollbacks](Student/07-updaterollback.md)**
-   - Deploy v2 of FabMedical to AKS via rolling updates, roll it back, then deploy it again using the blue/green deployment methodology.
-- Challenge 8: **[Storage](Student/08-storage.md)**
-   - Delete the MongoDB you created earlier and observe what happens when you don't have persistent storage. Fix it!
-- Challenge 9: **[Helm](Student/09-helm.md)**
-   - Install Helm tools, customize a sample Helm package to deploy FabMedical, publish the Helm package to Azure Container Registry and use the Helm package to redeploy FabMedical to AKS.
-- Challenge 10: **[Networking](Student/10-networking.md)**
-   - Explore integrating DNS with Kubernetes services and explore different ways of routing traffic to FabMedical by configuring an Ingress Controller.
-- Challenge 11: **[Operations and Monitoring](Student/11-opsmonitoring.md)**
-   - Explore the logs provided by Kubernetes using the Kubernetes CLI, configure Azure Monitor and build a dashboard that monitors your AKS cluster
-   
+
 ## Prerequisites
 
 The purpose of this Hack is to build an understanding of the use of Azure Firewall with a focus on the network and security capabilities recently introduced. Consider the following articles required as pre-reading to build a foundation of knowledge.
