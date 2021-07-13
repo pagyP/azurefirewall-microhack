@@ -4,14 +4,13 @@
 
 ## Introduction
 
-Threat intelligence is a mechanism that provides information about threats and threat actors that helps mitigate harmful events in cyberspace. Within the  Azure firewall, you can configure it through Firewall Policies to alert or deny the traffic from known malicious IP addresses and domains. This information is provided from the [Microsoft Threat Intelligence feed](https://www.microsoft.com/en-us/security/business/operations?rtc=1)
+In this challenge, you will set up DNS queries coming from the virtual machines to the Azure Firewall that will act as DNS Proxy.
 
 
 ## Description
+You will set up the DNS Proxy through the Azure Firewall, and when virtual machines try to resolve domain names, the first step these requests will be following to Firewall base on virtual network DNS settings. 
 
-You will set up the threat intelligence-based filtering mode as Alert and Deny when a virtual machine in Brazil Region tries to connect a malicious domain will be generated a log with the trigger. This setup will be done using the Firewall Policies.
-
-#### Task 1 - Enable Threat intelligence-based
+#### Task 1 - Setup DNS Proxy
 
 To start the setup, follow the steps listed below:
 
@@ -27,6 +26,7 @@ To start the setup, follow the steps listed below:
 az account list --output table
 az account set --subscription "My Subscription"
 ```
+
 - Create an application rules trought Firewall Policy  **azfw-policy-std**
 
 ```bash
