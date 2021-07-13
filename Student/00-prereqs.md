@@ -77,9 +77,8 @@ Verify if you can access all four virtual machines via Azure Bastion, using the 
 | ---------  |--------------|
 | azureadmin | HackP@ssw0rd |
 
-### Task 3: Deploy the workbook for Azure Firewall
+### Task 3: Import certificate on Azure KeyVault
 
-1. Follow step-by-step in the [Monitor logs using Azure Firewall Workbook](https://docs.microsoft.com/en-us/azure/firewall/firewall-workbook/)  to deploy the workbook for Azure firewall in Log Analytics workspace.
 
 ## Success Criteria
 

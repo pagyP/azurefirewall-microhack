@@ -4,9 +4,7 @@
 
 ## Introduction
 
-Threat intelligence is a mechanism that provides information about threats and threat actors that helps mitigate harmful events in cyberspace. Within the  Azure firewall, you can configure it through Firewall Policies to alert or deny the traffic from known malicious IP addresses and domains. This information is provided from the [Microsoft Threat Intelligence feed](https://www.microsoft.com/en-us/security/business/operations?rtc=1)
-
-In this challenge you will be setup threat intelligence to avoid access to malicious domain from virtual network.
+In this challenge you will be setup threat intelligence to avoid access to malicious domain from virtual network.The Threat intelligence is a mechanism that provides information about threats and threat actors that helps mitigate harmful events in cyberspace. Within the  Azure firewall, you can configure it through Firewall Policies to alert or deny the traffic from known malicious IP addresses and domains. This information is provided from the [Microsoft Threat Intelligence feed](https://www.microsoft.com/en-us/security/business/operations?rtc=1).
 
 ## Description
 
