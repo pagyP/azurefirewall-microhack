@@ -40,9 +40,9 @@ az network firewall policy rule-collection-group collection add-filter-collectio
 nslookup www.microsoft.com
 ```
 
-- Look at the information and verify the **address** of DNS Server.
+- Look at the information and verify the **address** of the DNS Server.
 
-:question:What is the DNS Ip Adress?
+:question:What is the DNS Ip Address?
 
 You will change the DNS Server in the spoke virtual network and verify the DNS IP address inside the virtual machine.
 
