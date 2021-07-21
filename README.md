@@ -27,7 +27,9 @@ After completing this Hack you will be able to:
    - Establish the communication between two spokes virtual networks through Azure Firewall in the different regions.
 - Challenge 3: **[Threat Intelligence](Student/03-threat-intelligence.md)**
    - Setup the Thread Intelligence and verify it is running.
-- Challenge 4: **[Enable the DNS Proxy](Student/04-dns-proxy.md)**
+- Challenge 4: **[DNS Proxy](Student/04-dns-proxy.md)**
+   - Configure the DNS proxy.
+- Challenge 5: **[IDPS](Student/05-idps.md)**
    - Configure the DNS proxy.
 
 ## Prerequisites

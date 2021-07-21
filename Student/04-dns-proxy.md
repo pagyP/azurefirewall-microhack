@@ -1,4 +1,4 @@
-# Challenge 3: Enable the DNS Proxy
+# Challenge 3: Setup the DNS Proxy
 
 [< Previous Challenge](./00-prereqs.md) - **[Home](../README.md)** - [Next Challenge >](./02-acr.md)
 
@@ -56,7 +56,7 @@ az network vnet update -g wth-azurefirewall-rg  -n brazilsouth-spoke1-vnet --dns
 ipconfig /release && ipconfig /renew
 ```
 
-Wait to the Bastion to reconnect the virtual machine and run it:
+Wait to the Azure Bastion to reconnect the virtual machine and run it:
 
 ```cmd
 nslookup www.microsoft.com
@@ -64,7 +64,7 @@ nslookup www.microsoft.com
 :question:What is the DNS IP Address?
 
 
-#### Task 1 - Verify the Firewall log on Log Analitycs workspace
+#### Task 1 - Verify the Firewall logs trought the Log Analitycs workspace
 
 You can verify if it triggers an alert in the Azure Log Analytics. You can use the below Kusto Query:
 
@@ -85,9 +85,10 @@ AzureDiagnostics
 
 ## Success Criteria
 
-1. You can reach out the virtual machine in eastus2 region and local datacenter.
-2. You have updated 5 route tables for complete it.
-3. You can run ping tool to test the connection between virtual machines.
+1. You have updated the Firewall policy with the application rule
+2. You have updated the DNS Proxy.
+3. You can see the DNS queries to the following for Azure Firewall.
+
 
 ## Learning Resources
 
