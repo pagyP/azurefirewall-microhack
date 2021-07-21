@@ -39,7 +39,7 @@ Connect to **azbrazilsouthvm01 - 10.20.1.4** via Bastion, open the command promp
 curl testmaliciousdomain.eastus.cloudapp.azure.com
 ```
 
-:question: What is the behavior, after you execute the curl command?
+:question: What is the behavior, after you run the curl command?
 
 You can verify if it triggers an alert in the Azure Log Analytics. You can use the below Kusto Query:
 
