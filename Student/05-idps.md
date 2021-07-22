@@ -53,6 +53,8 @@ AzureDiagnostics
 | limit 10
 ```
 
+![Azure Log Analytics](images/scan-nmap.PNG)
+
 :question:Any alert?
 
 #### Task 2 - Deny the network malicious attack
@@ -70,6 +72,8 @@ az network firewall policy update --name azfw-policy-std -g wth-azurefirewall-rg
 ```bash
 curl -A "BlackSun" 10.20.1.4
 ```
+
+![Azure Log Analytics](images/block_blacksun.PNG)
 
 :question: What is the result?
 
