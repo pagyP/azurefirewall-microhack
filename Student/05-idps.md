@@ -90,12 +90,13 @@ AzureDiagnostics
 
 ## Success Criteria
 
-1. You have updated the Firewall policy with the application rule
-2. You have updated the DNS Proxy.
-3. You can see the DNS queries to the following for Azure Firewall.
+1. You detect the port scan trought the Azure Log Analitycs.
+2. You have updated the IDPS policy.
+3. You blocked the network malicious attack .
 
 
 ## Learning Resources
 
-- [Azure Firewall DNS settings](https://docs.microsoft.com/en-us/azure/firewall/dns-settings)</br>
+- [Deploy and configure Azure Firewall Premium](https://docs.microsoft.com/en-us/azure/firewall/premium-deploy</br>
+- [Firewall/IDS Evasion and Spoofing](https://nmap.org/book/man-bypass-firewalls-ids.html
 
