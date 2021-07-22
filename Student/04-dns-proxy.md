@@ -61,10 +61,8 @@ Wait to the Azure Bastion to reconnect the virtual machine and run it:
 ```cmd
 nslookup www.microsoft.com
 ```
+
 :question:What is the DNS IP Address?
-
-
-#### Task 1 - Verify the Firewall logs trought the Log Analitycs workspace
 
 You can verify if it triggers an alert in the Azure Log Analytics. You can use the below Kusto Query:
 
