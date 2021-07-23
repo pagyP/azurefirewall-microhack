@@ -1,10 +1,10 @@
 # What The Hack - Protect your vNETs with Azure Firewall Premium
 ## Introduction
-The adoption of Internet use throughout the business world has boosted network usage in general. Companies are using various network security measures such as firewalls, intrusion detection systems (IDS), intrusion prevention systems (IPS) to protect their networks (even for cloud computing), which are the preferred targets of threat actors for compromising organizations’ security. The Azure Firewall is a managed, cloud-based network security service that protects your resources inside the virtual network. You will engage in a complex Azure Network security setup using the Azure Firewall to complete the challenges in these WTH exercises. You will set up rules for Network, Application, IDPs, TLS Inspection and Web Categories.
+The adoption of Internet use throughout the business world has boosted network usage in general. Companies are using various network security measures such as firewalls, intrusion detection systems (IDS), intrusion prevention systems (IPS) to protect their networks (even for cloud computing), which are the preferred targets of threat actors for compromising organizations’ security. The Azure Firewall is a managed, cloud-based network security service that protects your resources inside the virtual network. You will engage in a complex Azure Network security setup using the Azure Firewall to complete the challenges in these WTH exercises. You will set up rules for Network, Application, IDPs, Threat Intel, TLS Inspection and Web Categories.
 
 
 <p align="center">
-  <img width="420" height="420" src="/Student/images/firewall-threat.jpg">
+  <img width="500" height="420" src="/Student/images/firewall-threat.jpg">
 </p>
 
 
@@ -28,9 +28,17 @@ After completing this Hack you will be able to:
 - Challenge 3: **[Threat Intelligence](Student/03-threat-intelligence.md)**
    - Setup the Thread Intelligence and verify it is running.
 - Challenge 4: **[DNS Proxy](Student/04-dns-proxy.md)**
-   - Configure the DNS proxy.
+   -  Configure all forward DNS from virtual networks to Azure Firewall.
 - Challenge 5: **[IDPS](Student/05-idps.md)**
-   - Configure the DNS proxy.
+   - Configure a network intrusion detection and prevention system (IDPS) that allows you to monitor network activities for malicious activity.
+- Challenge 6: **[TLS Inspection](Student/06-tls.md)**
+   - Configure the TLS inspection to decrypts/encrypts outbound data traffic.
+- Challenge 7: **[URL Filtering](Student/07-url-filtering.md)**
+   - Configure the URL Filtering in the application rule .
+- Challenge 8: **[Web Categories](Student/08-web-categories.md)**
+   - Manager the web categories to allow or deny the user access.
+- Challenge 9: **[Enabling the Azure Firewall solution for Azure Sentinel (Optional) ](Student/08-web-categories.md)**
+   - Deploy a Firewall solution inside the Azure Sentinel to have visibility of the netowrk security incidents.
 
 ## Prerequisites
 
